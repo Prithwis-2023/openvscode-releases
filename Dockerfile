@@ -61,5 +61,12 @@ ENV LANG=C.UTF-8 \
 
 # Default exposed port if none is specified
 EXPOSE 3000
+ 
 
 ENTRYPOINT [ "/bin/sh", "-c", "exec ${OPENVSCODE_SERVER_ROOT}/bin/openvscode-server --host 0.0.0.0 --without-connection-token \"${@}\"", "--" ]
+
+RUN sudo docker pull prithwisdev/calcom:latest \
+    sudo apt-get update \
+    sudo apt-get install x11-xserver-utils \
+    xhost + \
+    sudo docker run -t -i -v /tmp/.X11-unix:/tmp/.X11-unix -e DISPLAY=unix$DISPLAY calcom
